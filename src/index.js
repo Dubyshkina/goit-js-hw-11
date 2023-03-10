@@ -40,6 +40,7 @@ searchForm.addEventListener('submit', async event => {
       renderGallery(refs.hits);
       lightbox = new SimpleLightbox('.photo-card > a');
       loadBtn.style.visibility = 'visible';
+      
     }
   }
 });
@@ -48,8 +49,15 @@ loadBtn.addEventListener('click', async event => {
   page += 1;
 
   const loadRefs = await getPhotos(q, page);
+  const lastPage = Math.ceil(loadRefs.totalHits / 40);
+  if(page === lastPage ) {
+   loadBtn.style.visibility = 'hidden';
+ }
 
   renderGallery(loadRefs.hits);
+ 
+      
+      
 
   const { height: cardHeight } = document
     .querySelector('.gallery')
